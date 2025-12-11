@@ -1,0 +1,353 @@
+:root {
+    /* Primary Colors */
+    --bright-blue: hsl(220, 98%, 61%);
+    --check-bg: linear-gradient(135deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+
+    /* Dark Theme (Default) */
+    --bg-body: hsl(235, 21%, 11%);
+    --bg-card: hsl(235, 24%, 19%);
+    --text-main: hsl(234, 39%, 85%);
+    --text-hover: hsl(236, 33%, 92%);
+    --text-muted: hsl(234, 11%, 52%);
+    --text-completed: hsl(233, 14%, 35%);
+    --border-color: hsl(237, 14%, 26%);
+    --header-img: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.1)), url(images/bg-desktop-dark.jpg);
+    
+}
+
+.light-theme {
+    --bg-body: hsl(0, 0%, 98%);
+    --bg-card: hsl(0, 0%, 100%);
+    --text-main: hsl(235, 19%, 35%);
+    --text-hover: hsl(235, 19%, 35%);
+    --text-muted: hsl(236, 9%, 61%);
+    --text-completed: hsl(233, 11%, 84%);
+    --border-color: hsl(220, 3%, 82%);
+    --header-img: url(images/bg-desktop-light.jpg);
+    
+    
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Josefin Sans', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    transition: background-color 1s ease;
+    min-height: 100vh;
+    font-size: 18px;
+}
+
+/* Background Header */
+.bg-image {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+    transition: opacity 1s ease /* This creates the smooth fade */
+}
+
+.bg-dark-img {
+    background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.1)), url('images/bg-desktop-dark.jpg');
+    opacity: 1; /* Visible by default in dark mode */
+}
+
+.bg-light-img {
+    background-image: url('images/bg-desktop-light.jpg');
+    opacity: 0; /* Hidden by default in dark mode */
+}
+body.light-theme .bg-dark-img {
+    opacity: 0;
+}
+
+body.light-theme .bg-light-img {
+    opacity: 1;
+}
+
+
+.container {
+    width: 100%;
+    max-width: 540px;
+    margin: 70px auto;
+    padding: 0 24px;
+    
+}
+
+/* Header */
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    
+}
+
+.todo-header h1 {
+    letter-spacing: 15px;
+    color: white;
+    font-size: 40px;
+    font-weight: 700;
+    
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    
+}
+
+/* Icon Switching */
+.light-theme .icon-sun { display: none; }
+.light-theme .icon-moon { display: block; fill: #484b6a; }
+.dark-theme .icon-sun { display: block; }
+.dark-theme .icon-moon { display: none; }
+
+/* Input Area */
+.todo-input-wrapper {
+    background-color: var(--bg-card);
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.circle-indicator {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    flex-shrink: 0;
+    
+}
+
+#todo-input {
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 18px;
+    width: 100%;
+    outline: none;
+    padding-top: 4px; /* text alignment fix */
+}
+
+/* Todo List Box */
+.todo-box {
+    background-color: var(--bg-card);
+    border-radius: 5px;
+    box-shadow: 0 35px 50px -15px rgba(0,0,0,0.3);
+}
+
+ul {
+    list-style: none ;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+
+   
+}
+
+.todo-item:hover .delete-btn {
+    opacity: 1;
+}
+
+.dragging {
+    opacity: 0.5;
+    background-color: var(--bg-card); /* Keeps background consistent */
+    border: 2px dashed var(--text-muted); /* Visual cue */
+}
+/* Custom Checkbox Logic */
+.check-circle {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    position: relative;
+}
+
+.check-circle:hover {
+    border-color: #747272; 
+    /* Ideally a gradient border, but simple CSS border color is easier for pure CSS */
+}
+
+.todo-item.completed .check-circle {
+    background: var(--check-bg);
+    border-color: transparent;
+}
+
+.todo-item.completed .check-circle::after {
+    content: url(images/icon-check.svg);
+    display: block;
+    margin-top: 2px;
+}
+
+.todo-text {
+    flex-grow: 1;
+    color: var(--text-main);
+    padding-top: 5px;
+}
+
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+    color: var(--text-completed);
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+/* Footer & Filters */
+.todo-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-muted);
+    position: relative;
+}
+
+.filters {
+    display: flex;
+    gap: 15px;
+}
+
+.filter-btn {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.filter-btn:hover {
+    color: var(--text-hover);
+}
+
+.filter-btn.active {
+    color: var(--bright-blue);
+}
+
+#clear-completed:hover {
+    color: var(--text-hover);
+    cursor: pointer;
+}
+
+/* Mobile Specifics */
+.mobile-filters-box {
+    display: none;
+    margin-top: 16px;
+    padding: 15px;
+    justify-content: center;
+}
+
+.drag-help {
+    text-align: center;
+    margin-top: 40px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+@keyframes gradient-move {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#mystery-btn {
+    padding: 5px 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    /* The gradient colors: Pink, Yellow, Blue */
+    background: linear-gradient(45deg, #ff357a, #fff172, #2196f3);
+    background-size: 300% 300%; /* Make gradient big so we can move it */
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    
+    
+    
+}
+
+
+#mystery-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #ff357a;
+    animation: gradient-move 2s ease infinite;
+}
+
+#clear-completed {
+    background: none;
+    border: none;
+    font-family: inherit;
+    color: var(--text-muted);
+    
+    
+}
+.todo-input-wrapper,
+.todo-box,
+.todo-item,
+.filter-btn {
+    transition: background-color 0.8s ease, color 0.8s ease, border-color 0.8s ease;
+}
+
+.author {
+    text-align: center;
+    margin-top: 30px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+.author:hover {
+    color: var(--text-hover);
+    cursor: pointer;
+
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .desktop-filters {
+        display: none;
+    }
+    
+    .mobile-filters-box {
+        display: flex;
+    }
+}

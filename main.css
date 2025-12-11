@@ -27,7 +27,54 @@
     
     
 }
+.todotitle h1 {
+    position: relative;
+    
+    transition: color 0.3s ease; 
+    text-decoration: none;
+}
 
+
+.todotitle h1::after {
+    content: "DODO";
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    color: white; 
+    font-size: 40px; 
+    font-weight: 700;
+    letter-spacing: 15px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+    text-shadow: #ffffff 0 0 15px;
+}
+
+/* 3. Hover state: Make the original text disappear by changing its color */
+.todotitle:hover h1 {
+    
+    color: transparent; 
+}
+
+.todotitle:hover h1::after {
+    
+    opacity: 1;
+    transform: translateY(-2px);
+}
+/* .todotitle {
+    letter-spacing: 15px;
+    color: white;
+    font-size: 40px;
+    font-weight: 700;
+    font-family: 'Josefin Sans', sans-serif;
+    text-decoration: none;
+}   
+.todotitle:hover {
+    color: var(--text-hover);
+    cursor: pointer;
+    text-shadow: #ffffff 0 0 15px;
+    text-decoration: !underline;
+} */
 * {
     margin: 0;
     padding: 0;
@@ -41,10 +88,36 @@ body {
     transition: background-color 1s ease;
     min-height: 100vh;
     font-size: 18px;
+    
 }
 
 /* Background Header */
+@keyframes slowPan {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 2. Apply it to your header background */
 .bg-image {
+    /* Keep existing styles like height, background-size, etc. */
+    height: 300px;
+    background-size: 150% 150%; /* Make the background larger than the container */
+    background-position: center;
+    z-index: -1;
+    position: absolute;
+    
+    width: 100%; /* <-- ADD THIS LINE */
+    top: 0;      /* ADD these to pin it to the top */
+    left: 0;     /* ADD these to pin it to the left */
+    transition: opacity 1s ease; /* This creates the smooth fade */
+    /* Apply the animation */
+    animation: slowPan 60s linear infinite alternate; /* 60s makes it very slow */
+}
+
+/* for static image */
+
+/* .bg-image {
     height: 300px;
     background-size: cover;
     background-position: center;
@@ -53,8 +126,8 @@ body {
     left: 0;
     width: 100%;
     z-index: -1;
-    transition: opacity 1s ease /* This creates the smooth fade */
-}
+    transition: opacity 1s ease /* This creates the smooth fade }*/
+ 
 
 .bg-dark-img {
     background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.1)), url('images/bg-desktop-dark.jpg');
@@ -80,6 +153,7 @@ body.light-theme .bg-light-img {
     margin: 70px auto;
     padding: 0 24px;
     
+    
 }
 
 /* Header */
@@ -98,22 +172,57 @@ body.light-theme .bg-light-img {
     font-weight: 700;
     
 }
-
+/* for theme icon rotation  */
 #theme-toggle {
     background: none;
     border: none;
     cursor: pointer;
     
 }
+#theme-toggle .icon-sun
+ {
+    transition: transform 0.4s ease, fill 0.3s ease;
+    transform-origin: center; 
+    
+}
 
-/* Icon Switching */
+#theme-toggle:hover .icon-sun {
+    fill: var(--bright-blue);
+    transform: rotate(100deg); 
+    
+
+}
+
 .light-theme .icon-sun { display: none; }
 .light-theme .icon-moon { display: block; fill: #484b6a; }
 .dark-theme .icon-sun { display: block; }
 .dark-theme .icon-moon { display: none; }
 
 /* Input Area */
+@keyframes inputGlow {
+    0% { border-color: #ff357a; box-shadow: 0 0 5px rgba(160, 96, 117, 0.5); } /* Pink */
+    33% { border-color: #a39f73; box-shadow: 0 0 10px rgba(255, 249, 199, 0.7); } /* Yellow */
+    66% { border-color: #62b7fc; box-shadow: 0 0 5px rgba(46, 76, 101, 0.5); } /* Blue */
+    100% { border-color: #f5719d; box-shadow: 0 0 5px rgba(124, 59, 81, 0.5); } /* Back to Pink */
+}
 .todo-input-wrapper {
+    background-color: var(--bg-card);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 24px;
+    
+    /* Give it a solid border to animate */
+    border: 1px solid transparent; 
+    
+    /* Apply the continuous animation */
+    animation: inputGlow 6s linear infinite; /* 6s duration, runs forever */
+}
+
+/* static todo input wrapper  */
+/* .todo-input-wrapper {
     background-color: var(--bg-card);
     padding: 20px;
     border-radius: 5px;
@@ -122,7 +231,7 @@ body.light-theme .bg-light-img {
     gap: 15px;
     margin-bottom: 24px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
+} */
 
 .circle-indicator {
     width: 24px;
@@ -134,6 +243,7 @@ body.light-theme .bg-light-img {
 }
 
 #todo-input {
+    
     background: transparent;
     border: none;
     color: var(--text-main);
@@ -292,7 +402,7 @@ ul {
 
 #mystery-btn {
     padding: 5px 12px;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
     color: white;
     /* The gradient colors: Pink, Yellow, Blue */

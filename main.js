@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearCompletedBtn = document.getElementById('clear-completed');
     const filterBtns = document.querySelectorAll('.filter-btn');
     const themeToggle = document.getElementById('theme-toggle');
+    const mysteryElement = document.getElementById('mystery-btn');
 
     let todos = [
         { id: 1, text: 'Complete online JavaScript course', completed: true },
@@ -140,6 +141,36 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.toggle('light-theme');
         document.body.classList.toggle('dark-theme');
     });
+    
+    mysteryElement.addEventListener('click', () => {
+        const mysteryTasks = [
+            "🍕 Order pizza for the developer",
+            "💃 Dance for 5 minutes",
+            "👽 Watch a sci-fi movie",
+            "🛌 Take a nap immediately",
+            "🐱 Pet a stray cat",
+            "📵 Turn off phone for 2 hours",
+            "🏃 Run 1km right now"
+        ];
+    
+        const randomTask = mysteryTasks[Math.floor(Math.random() * mysteryTasks.length)];
+    
+        todos.push({
+            id: Date.now(),
+            text: "✨ " + randomTask,
+            completed: false
+        });
+        
+        renderTodos();
+        
+        // Auto-scroll to the new item
+        setTimeout(() => {
+             const lastItem = todoList.lastElementChild;
+             if(lastItem) lastItem.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+    });
 
     renderTodos();
+    
+
 });

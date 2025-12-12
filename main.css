@@ -29,8 +29,7 @@
 }
 .todotitle h1 {
     position: relative;
-    
-    transition: color 0.3s ease; 
+    transition: color 0.5s ease; 
     text-decoration: none;
 }
 
@@ -45,7 +44,7 @@
     font-size: 40px; 
     font-weight: 700;
     letter-spacing: 15px;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.5s ease, transform 0.5s ease;
     text-decoration: none;
     text-shadow: #ffffff 0 0 15px;
 }
@@ -205,6 +204,12 @@ body.light-theme .bg-light-img {
     66% { border-color: #62b7fc; box-shadow: 0 0 5px rgba(46, 76, 101, 0.5); } /* Blue */
     100% { border-color: #f5719d; box-shadow: 0 0 5px rgba(124, 59, 81, 0.5); } /* Back to Pink */
 }
+@keyframes inputGlowLight {
+    0% { border-color: #ff357a; box-shadow: 0 0 10px rgba(160, 96, 117, 0.5); } /* Pink */
+    33% { border-color: #eddb13; box-shadow: 0 0 20px rgba(255, 239, 93, 0.7); } /* Yellow */
+    66% { border-color: #62b7fc; box-shadow: 0 0 10px rgba(46, 76, 101, 0.5); } /* Blue */
+    100% { border-color: #f5719d; box-shadow: 0 0 10px rgba(124, 59, 81, 0.5); } /* Back to Pink */
+}
 .todo-input-wrapper {
     background-color: var(--bg-card);
     padding: 20px;
@@ -220,7 +225,9 @@ body.light-theme .bg-light-img {
     /* Apply the continuous animation */
     animation: inputGlow 6s linear infinite; /* 6s duration, runs forever */
 }
-
+.light-theme .todo-input-wrapper {
+    animation: none;
+}
 /* static todo input wrapper  */
 /* .todo-input-wrapper {
     background-color: var(--bg-card);
@@ -412,6 +419,7 @@ ul {
     border-radius: 25px;
     cursor: pointer;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: 0.3s all ease;
     
     
     
@@ -432,6 +440,7 @@ ul {
     
     
 }
+
 .todo-input-wrapper,
 .todo-box,
 .todo-item,
@@ -444,14 +453,23 @@ ul {
     margin-top: 30px;
     color: var(--text-muted);
     font-size: 14px;
+    transition: color 0.4s ease;
+    
 }
 .author:hover {
     color: var(--text-hover);
     cursor: pointer;
 
-}
 
-/* Responsive */
+}
+.light-theme .author {
+    color: hsl(0, 0%, 74%);
+    
+}
+.light-theme .author:hover {
+    color: white;
+}
+/* Responsive
 @media (max-width: 600px) {
     .desktop-filters {
         display: none;
@@ -460,4 +478,43 @@ ul {
     .mobile-filters-box {
         display: flex;
     }
+} */
+
+/* Responsive */
+
+.mobile-filters-box {
+    display: none;
+    margin-top: 16px;
+    padding: 15px;
+    justify-content: center;
 }
+@media (max-width: 600px) {
+    /* Hide the desktop filters */
+    .todo-footer > .desktop-filters { 
+        display: none ;
+    }
+    #items-left {
+        font-size: 10px;
+    }
+    
+    /* CRITICAL: Force the mobile filters to be visible on small screens */
+    .todo-box.mobile-filters-box { /* Targeted the specific class combination */
+        display: flex ; /* This MUST make them appear */
+    }
+    #clear-completed {
+        font-size: 10px;
+    }
+    #mystery-btn {
+        
+        font-size: 10px;
+        padding: 5px 10px;
+       
+    }
+   
+    /* Adjust main layout for small screens */
+    .container {
+        margin: 50px auto;
+        padding: 0 16px;
+        font-size: 13px;
+    
+}}

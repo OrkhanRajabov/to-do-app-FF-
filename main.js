@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterBtns = document.querySelectorAll('.filter-btn');
     const themeToggle = document.getElementById('theme-toggle');
     const mysteryElement = document.getElementById('mystery-btn');
+   
 
     let todos = [
         { id: 1, text: 'Complete online JavaScript course', completed: true },
